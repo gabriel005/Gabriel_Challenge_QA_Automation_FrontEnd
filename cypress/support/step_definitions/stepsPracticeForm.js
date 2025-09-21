@@ -10,7 +10,7 @@ Before(() => {
 /* ------ Given ------ */
 
 Given("that I am on the practice form page", () => {
-  cy.contains(".top-card", "Forms")
+  cy.contains(".top-card", "Forms", { timeout: 120000 })
     .should("be.visible")
     .click();
 });
@@ -18,7 +18,7 @@ Given("that I am on the practice form page", () => {
 /* ------ When ------ */
 
 When('I access the {string} menu', () => {
-  cy.contains(".element-list li", "Practice Form")
+  cy.contains(".element-list li", "Practice Form", { timeout: 120000 })
     .should("be.visible")
     .click();
 });

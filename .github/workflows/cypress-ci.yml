@@ -33,5 +33,6 @@ jobs:
       - name: Install Cypress
         run: npx cypress install
 
-      - name: Run Cypress tests
-        run: npx cypress run --browser chrome --headless
+      - name: Run Cypress tests in headed mode
+        run: npx cypress run --browser chrome --headed
+

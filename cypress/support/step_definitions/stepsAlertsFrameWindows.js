@@ -22,7 +22,10 @@ When("I click on the {string} in Browser menu", (button) => {
 When("I click on the {string} tab", (tab) => {
   if (tab === "New Window") {
     cy.window().then((win) => {
-      cy.stub(win, "open").as("windowOpen");
+      // Substitui window.open para abrir na mesma aba
+      cy.stub(win, "open").callsFake((url) => {
+        win.location.href = url; // abre na mesma aba
+      }).as("windowOpen");
     });
     cy.get("#windowButton").click();
   }
