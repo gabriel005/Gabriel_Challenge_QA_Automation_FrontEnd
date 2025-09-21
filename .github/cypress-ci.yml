@@ -1,0 +1,39 @@
+name: Cypress Tests
+
+on:
+  push:
+    branches: ["main"] # roda nos pushes para main
+  pull_request:
+    branches: ["main"] # roda nos PRs para main
+
+jobs:
+  cypress-run:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout do repositório
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Setup do Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20 # mesma versão que você usa localmente
+
+      # Cache das dependências (mais rápido nos próximos runs)
+      - name: Cache node modules
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      # Instalar dependências
+      - name: Install dependencies
+        run: npm ci
+
+      # Rodar Cypress (modo headless)
+      - name: Run Cypress tests
+        run: npx cypress run
